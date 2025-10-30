@@ -13,7 +13,6 @@ const resultsDiv = document.getElementById('results');
 const loadingDiv = document.getElementById('loading');
 const errorDiv = document.getElementById('error');
 
-// Show/Hide loading
 function showLoading(show) {
     if (show) {
         loadingDiv.classList.remove('hidden');
@@ -25,23 +24,16 @@ function showLoading(show) {
     }
 }
 
-// Show errors
 function showError(message) {
     errorDiv.textContent = message;
     errorDiv.classList.remove('hidden');
 }
 
-// Fetch data from API
 async function fetchData(url, type) {
     showLoading(true);
-    
     try {
         const response = await fetch(url);
-        
-        if (!response.ok) {
-            throw new Error(`HTTP Error: ${response.status}`);
-        }
-        
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
         const data = await response.json();
         showLoading(false);
         displayResults(data, type);
@@ -51,18 +43,13 @@ async function fetchData(url, type) {
     }
 }
 
-// Render results
 function displayResults(data, type) {
     resultsDiv.innerHTML = '';
-    
-    // Limitar a 10 resultados para mejor visualización
     const limitedData = Array.isArray(data) ? data : [data];
-    
     limitedData.slice(0, 10).forEach(item => {
         const card = createCard(item, type);
         resultsDiv.appendChild(card);
     });
-    
     if (limitedData.length === 0) {
         const noData = document.createElement('p');
         noData.style.textAlign = 'center';
@@ -72,11 +59,9 @@ function displayResults(data, type) {
     }
 }
 
-// Create cards per data type
 function createCard(item, type) {
     const card = document.createElement('div');
     card.className = 'card';
-    
     switch(type) {
         case 'users':
             card.innerHTML = `
@@ -88,7 +73,6 @@ function createCard(item, type) {
                 <p><strong>Joined at:</strong> ${item.created_at}</p>
             `;
             break;
-            
         case 'posts':
             card.innerHTML = `
                 <h3>${item.title}</h3>
@@ -96,7 +80,6 @@ function createCard(item, type) {
                 <p><strong>User ID:</strong> ${item.user_id}</p>
             `;
             break;
-            
         case 'todos':
             const badgeClass = item.completed ? 'badge-complete' : 'badge-incomplete';
             const statusText = item.completed ? 'Completed' : 'Pending';
@@ -106,12 +89,11 @@ function createCard(item, type) {
             `;
             break;
     }
-    
     return card;
 }
 
-// Event Listeners
 fetchUsersBtn.addEventListener('click', () => fetchData(API_URLS.users, 'users'));
 fetchPostsBtn.addEventListener('click', () => fetchData(API_URLS.posts, 'posts'));
 fetchTodosBtn.addEventListener('click', () => fetchData(API_URLS.todos, 'todos'));
+
 

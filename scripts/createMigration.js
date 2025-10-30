@@ -1,18 +1,18 @@
 require('dotenv').config();
 
-// Construir DATABASE_URL desde variables de entorno
+// Build DATABASE_URL from env variables
 const dbUrl = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
 
-// Obtener el nombre de la migración del argumento
+// Get migration name from arg
 const migrationName = process.argv[2];
 
 if (!migrationName) {
-    console.error('❌ Por favor proporciona un nombre para la migración');
-    console.log('Uso: npm run migrate:create nombre_de_la_migracion');
+    console.error('❌ Please provide a name for the migration');
+    console.log('Usage: npm run migrate:create your_migration_name');
     process.exit(1);
 }
 
-// Ejecutar node-pg-migrate create
+// Execute node-pg-migrate create
 const { execSync } = require('child_process');
 
 try {

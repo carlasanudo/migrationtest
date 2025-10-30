@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
 // Error handling
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).json({ error: 'Something went wrong!' });
+    res.status(500).json({ error: 'Algo salió mal!' });
 });
 
 // Start server
@@ -52,7 +52,6 @@ app.listen(PORT, async () => {
     console.log(`🚀 Server running at http://localhost:${PORT}`);
     console.log(`📊 Connecting to: ${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
     
-    // Test database connection
     try {
         await db.query('SELECT NOW()');
         console.log('✅ PostgreSQL connection established');
@@ -61,4 +60,5 @@ app.listen(PORT, async () => {
         console.error('💡 Make sure your database is running');
     }
 });
+
 

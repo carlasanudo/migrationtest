@@ -1,55 +1,72 @@
-# Proyecto ImageProject
+# ImageProject
 
-Aplicación web full-stack con Node.js, Express y PostgreSQL.
+Full-stack web app with Node.js, Express and PostgreSQL.
 
-## 🚀 Características
+## 🚀 Features
 
-- ✅ **Backend con Node.js y Express**: API RESTful para interactuar con la base de datos
-- 🗄️ **Base de datos PostgreSQL**: Almacenamiento persistente de datos
-- 🎨 **Frontend moderno**: Interfaz con gradientes y animaciones
-- 📱 **Responsive**: Adaptable a diferentes tamaños de pantalla
-- ⚡ **Rutas API**: CRUD completo para usuarios, publicaciones y tareas
+- ✅ **Backend with Node.js and Express**: RESTful API to interact with the database
+- 🗄️ **PostgreSQL database**: Persistent data storage
+- 🎨 **Modern frontend**: Gradients and animations
+- 📱 **Responsive**: Adapts to different screen sizes
+- ⚡ **API routes**: Full CRUD for users, posts and todos
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```
 imageproject/
-├── public/               # Archivos estáticos
-│   ├── index.html       # Página principal
-│   ├── style.css        # Estilos CSS
-│   └── script.js        # Lógica del frontend
-├── config/              # Configuración
-│   └── database.js      # Configuración PostgreSQL
-├── routes/              # Rutas de la API
-│   ├── users.js         # Rutas de usuarios
-│   ├── posts.js         # Rutas de publicaciones
-│   └── todos.js         # Rutas de tareas
-├── scripts/             # Scripts de utilidad
-│   └── initDatabase.js  # Inicialización de BD
-├── server.js            # Servidor principal
-├── package.json         # Dependencias del proyecto
-└── .env.example         # Ejemplo de variables de entorno
+├── backend/                 # Backend (Express + PostgreSQL)
+│   ├── server.js           # Servidor principal
+│   ├── config/             # Configuración
+│   │   └── database.js
+│   ├── routes/             # Rutas de la API
+│   │   ├── users.js
+│   │   ├── posts.js
+│   │   └── todos.js
+│   ├── scripts/            # Scripts de utilidad
+│   │   ├── initDatabase.js
+│   │   ├── migrateHelper.js
+│   │   └── createMigration.js
+│   ├── public/             # Frontend estático (legacy)
+│   │   ├── index.html
+│   │   ├── style.css
+│   │   └── script.js
+│   ├── migrate.json
+│   └── migrations/
+│       └── 001_add_created_at_to_users.js
+├── frontend/               # Frontend (React + Vite)
+│   ├── index.html
+│   ├── vite.config.js
+│   └── src/
+│       ├── main.jsx
+│       ├── App.jsx
+│       ├── api.js
+│       └── pages/
+│           ├── Users.jsx
+│           ├── Posts.jsx
+│           └── Todos.jsx
+├── package.json            # Scripts raíz para backend/frontend
+└── ENV_EXAMPLE.md          # Ejemplo de variables de entorno
 ```
 
 ## 🛠️ Instalación
 
-### 1. Instalar dependencias
+### 1. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 2. Configurar PostgreSQL
+### 2. Configure PostgreSQL
 
-Asegúrate de tener PostgreSQL instalado y corriendo. Luego:
+Ensure PostgreSQL is installed and running, then:
 
-1. Crea un archivo `.env` basado en `.env.example`:
+1. Create an `.env` file based on `ENV_EXAMPLE.md`:
 
 ```bash
 cp .env.example .env
 ```
 
-2. Edita el archivo `.env` con tus credenciales:
+2. Edit the `.env` file with your credentials:
 
 ```env
 DB_HOST=localhost
@@ -60,90 +77,88 @@ DB_PASSWORD=tu_contraseña
 PORT=3000
 ```
 
-3. Crea la base de datos:
+3. Create the database:
 
 ```bash
 createdb imageproject_db
 ```
 
-4. Inicializa las tablas y datos de ejemplo:
+4. Initialize tables and sample data:
 
 ```bash
 npm run init-db
 ```
 
-### 3. Iniciar el servidor
+### 3. Start the servers
 
 ```bash
-# Modo producción
-npm start
-
-# Modo desarrollo (con auto-reload)
+# Backend
 npm run dev
+
+# Frontend (React)
+npm run frontend:dev
 ```
 
-El servidor estará disponible en `http://localhost:3000`
+The backend runs at `http://localhost:3000` and the frontend at `http://localhost:5173`.
 
-## 📡 Endpoints API
+## 📡 API Endpoints
 
-### Usuarios
+### Users
 
-- `GET /api/users` - Obtener todos los usuarios
-- `GET /api/users/:id` - Obtener un usuario específico
-- `POST /api/users` - Crear un nuevo usuario
+- `GET /api/users` - Get all users
+- `GET /api/users/:id` - Get a specific user
+- `POST /api/users` - Create a new user
 
-### Publicaciones
+### Posts
 
-- `GET /api/posts` - Obtener todas las publicaciones
-- `GET /api/posts/:id` - Obtener una publicación específica
-- `POST /api/posts` - Crear una nueva publicación
+- `GET /api/posts` - Get all posts
+- `GET /api/posts/:id` - Get a specific post
+- `POST /api/posts` - Create a new post
 
-### Tareas
+### Todos
 
-- `GET /api/todos` - Obtener todas las tareas
-- `GET /api/todos/:id` - Obtener una tarea específica
-- `POST /api/todos` - Crear una nueva tarea
-- `PATCH /api/todos/:id` - Actualizar el estado de una tarea
+- `GET /api/todos` - Get all todos
+- `GET /api/todos/:id` - Get a specific todo
+- `POST /api/todos` - Create a new todo
+- `PATCH /api/todos/:id` - Update a todo status
 
-## 💻 Uso
+## 💻 Usage
 
-1. Abre tu navegador en `http://localhost:3000`
-2. Haz clic en los botones para cargar datos:
-   - **Obtener Usuarios**: Muestra usuarios de la base de datos
-   - **Obtener Publicaciones**: Muestra publicaciones de la base de datos
-   - **Obtener Tareas**: Muestra tareas de la base de datos
+1. Open your browser at `http://localhost:3000` (legacy) or `http://localhost:5173` (React)
+2. Click the buttons to load data:
+   - **Get Users**: Shows users from the database
+   - **Get Posts**: Shows posts from the database
+   - **Get Todos**: Shows todos from the database
 
-## 🗄️ Base de Datos
+## 🗄️ Database
 
-### Tablas
+### Tables
 
-1. **users**: Almacena información de usuarios
-
+1. **users**: Stores user information
    - id, name, email, phone, city, company
 
-2. **posts**: Almacena publicaciones
-
+2. **posts**: Stores posts
    - id, title, body, user_id
 
-3. **todos**: Almacena tareas
+3. **todos**: Stores todos
    - id, title, completed
 
-### Inicialización
+### Initialization
 
-El script `scripts/initDatabase.js` crea las tablas e inserta datos de ejemplo automáticamente.
+The script `backend/scripts/initDatabase.js` creates tables and inserts sample data automatically.
 
-## 🔧 Tecnologías Utilizadas
+## 🔧 Tech Stack
 
 - **Backend**: Node.js, Express
-- **Base de datos**: PostgreSQL
-- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
-- **Otros**: pg (cliente PostgreSQL), dotenv, cors
+- **Database**: PostgreSQL
+- **Frontend**: React (Vite) and legacy HTML/CSS/JS
+- **Other**: pg (PostgreSQL client), dotenv, cors
 
-## 📝 Scripts Disponibles
+## 📝 Available Scripts
 
-- `npm start` - Inicia el servidor en modo producción
-- `npm run dev` - Inicia el servidor con nodemon (desarrollo)
-- `npm run init-db` - Inicializa la base de datos
+- `npm start` - Start backend in production mode
+- `npm run dev` - Start backend with nodemon (development)
+- `npm run init-db` - Initialize database
 
 ## 🤝 Contribuir
 

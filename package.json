@@ -1,22 +1,27 @@
 {
   "name": "imageproject",
   "version": "1.0.0",
-  "description": "Aplicación web con backend Node.js y PostgreSQL",
+  "description": "Full-stack web app with Node.js backend and PostgreSQL",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
-    "init-db": "node scripts/initDatabase.js",
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "init-db": "node backend/scripts/initDatabase.js",
     "migrate": "node-pg-migrate",
-    "migrate:up": "node scripts/migrateHelper.js up",
-    "migrate:down": "node scripts/migrateHelper.js down",
-    "migrate:create": "node scripts/createMigration.js"
+    "migrate:up": "node backend/scripts/migrateHelper.js up",
+    "migrate:down": "node backend/scripts/migrateHelper.js down",
+    "migrate:create": "node backend/scripts/createMigration.js",
+    "frontend:dev": "npm run dev --prefix frontend",
+    "frontend:build": "npm run build --prefix frontend",
+    "frontend:preview": "npm run preview --prefix frontend"
   },
   "keywords": [
     "node",
     "postgresql",
     "express",
-    "api"
+    "api",
+    "react",
+    "vite"
   ],
   "author": "",
   "license": "MIT",

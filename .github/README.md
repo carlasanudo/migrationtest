@@ -1,24 +1,24 @@
 # GitHub Actions - Database Migrations
 
-Este workflow ejecuta automáticamente las migraciones de base de datos cuando:
+This workflow automatically runs database migrations when:
 
-- Se hace push a las ramas `main` o `develop`
-- Se crea un Pull Request hacia `main` o `develop`
-- Se ejecuta manualmente desde la pestaña "Actions" de GitHub
+- You push to `main` or `develop`
+- You open a Pull Request to `main` or `develop`
+- You manually trigger it from the GitHub "Actions" tab
 
 ## Triggers
 
-El workflow se ejecuta solo cuando hay cambios en:
+The workflow runs only when there are changes to:
 
-- Archivos en la carpeta `migrations/`
-- El archivo de configuración del workflow
-- El archivo `package.json`
+- Files in the `migrations/` folder
+- The workflow configuration file
+- The `package.json` file
 
-## Configuración
+## Setup
 
-El workflow usa un contenedor Docker de PostgreSQL para ejecutar las migraciones en un entorno aislado.
+The workflow uses a PostgreSQL Docker container to run migrations in an isolated environment.
 
-### Variables de Entorno
+### Environment Variables
 
 ```env
 DB_HOST=localhost
@@ -28,16 +28,16 @@ DB_USER=sergio
 DB_PASSWORD=sergio123
 ```
 
-## Ejecutar Manualmente
+## Run Manually
 
-1. Ve a la pestaña "Actions" en tu repositorio de GitHub
-2. Selecciona "Run Database Migrations"
-3. Haz clic en "Run workflow"
+1. Go to the "Actions" tab in your GitHub repository
+2. Select "Run Database Migrations"
+3. Click "Run workflow"
 
-## Ver Resultados
+## See Results
 
-Después de cada ejecución, puedes ver:
+After each run, you can view:
 
-- El estado de las migraciones ejecutadas
-- Logs de cada paso del proceso
-- Confirmación de las migraciones en la tabla `pgmigrations`
+- The status of executed migrations
+- Logs for each step of the process
+- Confirmation of migrations in the `pgmigrations` table
