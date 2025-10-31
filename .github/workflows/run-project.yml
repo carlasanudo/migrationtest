@@ -1,0 +1,99 @@
+name: Build and Run Project
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: imageproject_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install root deps
+        run: npm ci
+
+      - name: Install frontend deps
+        run: npm ci --prefix frontend
+
+      - name: Build frontend
+        run: npm run frontend:build
+
+      - name: Wait for PostgreSQL
+        run: |
+          until pg_isready -h localhost -p 5432 -U postgres; do
+            echo "Waiting for postgres..."
+            sleep 2
+          done
+
+      - name: Initialize database
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: imageproject_db
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+        run: npm run init-db
+
+      - name: Start backend
+        env:
+          PORT: 3000
+          FRONTEND_URL: http://localhost:5173
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: imageproject_db
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+        run: |
+          nohup node backend/server.js > server.log 2>&1 &
+          echo $! > server.pid
+          sleep 3
+
+      - name: Check health endpoint
+        run: |
+          curl -f http://localhost:3000/health
+
+      - name: Check API endpoints
+        run: |
+          curl -f http://localhost:3000/api/users || true
+          curl -f http://localhost:3000/api/posts || true
+          curl -f http://localhost:3000/api/todos || true
+
+      - name: Print server logs (on failure)
+        if: failure()
+        run: |
+          echo '--- server.log ---'
+          cat server.log || true
+
+      - name: Stop backend
+        if: always()
+        run: |
+          if [ -f server.pid ]; then kill $(cat server.pid) || true; fi
+
+
