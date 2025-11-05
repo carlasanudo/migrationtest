@@ -1,8 +1,11 @@
-// URLs de la API local
+// API URL - can be configured via environment variable
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
+// URLs de la API
 const API_URLS = {
-    users: '/api/users',
-    posts: '/api/posts',
-    todos: '/api/todos'
+    users: `${API_BASE_URL}/api/users`,
+    posts: `${API_BASE_URL}/api/posts`,
+    todos: `${API_BASE_URL}/api/todos`
 };
 
 // Referencias a elementos del DOM
@@ -85,7 +88,7 @@ function createCard(item, type) {
                 <p><strong>Teléfono:</strong> ${item.phone || 'N/A'}</p>
                 <p><strong>Ciudad:</strong> ${item.city || 'N/A'}</p>
                 <p><strong>Compañía:</strong> ${item.company || 'N/A'}</p>
-                <p><strong>Join at:</strong> ${item.created_at}</p>
+                ${item.created_at ? `<p><strong>Join at:</strong> ${item.created_at}</p>` : ''}
             `;
             break;
             

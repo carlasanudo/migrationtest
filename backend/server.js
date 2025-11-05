@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const cors = require('cors');
 require('dotenv').config();
 
@@ -16,17 +15,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Servir archivos estáticos
-app.use(express.static(path.join(__dirname, 'public')));
-
 // Rutas API
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/todos', todoRoutes);
 
-// Ruta raíz
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
 // Manejo de errores

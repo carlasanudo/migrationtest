@@ -4,15 +4,18 @@ on:
   push:
     branches:
       - main
+      - develop
     paths:
-      - 'server.js'
-      - 'routes/**'
-      - 'config/**'
-      - 'scripts/**'
-      - 'migrations/**'
-      - 'package.json'
-      - 'package-lock.json'
+      - "backend/**"
       - '.github/workflows/deploy-backend.yml'
+
+  pull_request:
+    branches: 
+      - main
+      - develop
+    paths:
+      - "backend/**"
+      - "../.github/workflows/deploy-backend.yml"
   workflow_dispatch:
 
 jobs:

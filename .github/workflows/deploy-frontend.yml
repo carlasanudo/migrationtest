@@ -4,10 +4,19 @@ on:
   push:
     branches:
       - main
+      - develop
     paths:
-      - 'public/**'
       - 'frontend/**'
       - '.github/workflows/deploy-frontend.yml'
+
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches: 
+    - main
+    - develop
+    paths:
+      - "frontend/**"
+      - "../.github/workflows/deploy-frontend.yml"
   workflow_dispatch:
 
 jobs:

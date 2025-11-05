@@ -1,0 +1,23 @@
+{
+  "name": "imageproject-frontend",
+  "version": "1.0.0",
+  "description": "Frontend application for API Data Viewer",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "vite preview --port 4173"
+  },
+  "keywords": [
+    "frontend",
+    "vite",
+    "javascript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
+
