@@ -6,7 +6,7 @@ Create a `.env` file in the backend folder with the following variables:
 # Database Configuration
 DB_HOST=localhost
 DB_PORT=5432
-DB_NAME=imageproject_db
+DB_NAME=attempt2
 DB_USER=postgres
 DB_PASSWORD=
 

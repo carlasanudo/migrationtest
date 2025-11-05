@@ -54,7 +54,7 @@ cp .env.example .env
 ```env
 DB_HOST=localhost
 DB_PORT=5432
-DB_NAME=imageproject_db
+DB_NAME=attempt2
 DB_USER=postgres
 DB_PASSWORD=tu_contraseña
 PORT=3000
@@ -63,7 +63,7 @@ PORT=3000
 3. Crea la base de datos:
 
 ```bash
-createdb imageproject_db
+createdb attempt2
 ```
 
 4. Inicializa las tablas y datos de ejemplo:

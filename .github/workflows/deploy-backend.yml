@@ -31,11 +31,18 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
+        working-directory: ./backend
       
       - name: Install dependencies
+        working-directory: ./backend
         run: npm ci
       
+      - name: Build TypeScript
+        working-directory: ./backend
+        run: npm run build
+      
       - name: Run database migrations
+        working-directory: ./backend
         env:
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_PORT: ${{ secrets.DB_PORT }}
@@ -45,6 +52,7 @@ jobs:
         run: npm run migrate:up
       
       - name: Run tests (if available)
+        working-directory: ./backend
         continue-on-error: true
         run: npm test
       
