@@ -2,8 +2,8 @@
 
 Este workflow ejecuta automáticamente las migraciones de base de datos cuando:
 
-- Se hace push a las ramas `main` o `develop`
-- Se crea un Pull Request hacia `main` o `develop`
+- Se hace push a las ramas `main` o `dev`
+- Se crea un Pull Request hacia `main` o `dev`
 - Se ejecuta manualmente desde la pestaña "Actions" de GitHub
 
 ## Triggers

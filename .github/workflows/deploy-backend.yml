@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - develop
+      - dev
     paths:
       - "backend/**"
       - '.github/workflows/deploy-backend.yml'
@@ -12,7 +12,7 @@ on:
   pull_request:
     branches: 
       - main
-      - develop
+      - dev
     paths:
       - "backend/**"
       - "../.github/workflows/deploy-backend.yml"
@@ -31,11 +31,19 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
+        working-directory: ./backend
       
       - name: Install dependencies
+        working-directory: ./backend
         run: npm ci
       
+      - name: Build TypeScript
+        working-directory: ./backend
+        run: npm run build
+        continue-on-error: false
+      
       - name: Run database migrations
+        working-directory: ./backend
         env:
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_PORT: ${{ secrets.DB_PORT }}
@@ -43,28 +51,26 @@ jobs:
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: npm run migrate:up
+        continue-on-error: true
       
       - name: Run tests (if available)
+        working-directory: ./backend
         continue-on-error: true
         run: npm test
       
-      - name: Deploy to production
+      - name: Deploy to Azure App Service
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: backend-app-cb
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: ./backend
+          startup-command: 'npm start'
         env:
-          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
-          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-          PORT: ${{ secrets.PORT }}
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_PORT: ${{ secrets.DB_PORT }}
           DB_NAME: ${{ secrets.DB_NAME }}
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        run: |
-          echo "Deploy backend to your hosting platform"
-          # Add your deployment commands here
-          # Examples:
-          # - For Heroku: heroku container:push web -a your-app-name
-          # - For AWS: aws elasticbeanstalk update-environment
-          # - For DigitalOcean: doctl apps create-deployment
-          # - For custom server: rsync/ssh deployment commands
+          PORT: ${{ secrets.PORT }}
+          NODE_ENV: production
 
