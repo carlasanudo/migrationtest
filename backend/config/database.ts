@@ -1,9 +1,9 @@
-const { Pool } = require('pg');
+import { Pool, PoolConfig, QueryResult } from 'pg';
 
 // Configurar objeto de conexión
-const dbConfig = {
+const dbConfig: PoolConfig = {
     host: process.env.DB_HOST || 'localhost',
-    port: process.env.DB_PORT || 5432,
+    port: parseInt(process.env.DB_PORT || '5432', 10),
     database: process.env.DB_NAME || 'attempt2',
     user: process.env.DB_USER || 'postgres',
     max: 20,
@@ -23,11 +23,15 @@ pool.on('connect', () => {
     console.log('🔌 Nueva conexión establecida con PostgreSQL');
 });
 
-pool.on('error', (err) => {
+pool.on('error', (err: Error) => {
     console.error('❌ Error inesperado en el cliente PostgreSQL:', err);
 });
 
-module.exports = {
-    query: (text, params) => pool.query(text, params),
+export interface DatabaseQuery {
+    query: (text: string, params?: any[]) => Promise<QueryResult>;
+}
+
+export default {
+    query: (text: string, params?: any[]): Promise<QueryResult> => pool.query(text, params),
 };
 

@@ -2,21 +2,23 @@
   "name": "imageproject-backend",
   "version": "1.0.0",
   "description": "Backend API with Node.js, Express and PostgreSQL",
-  "main": "server.js",
+  "main": "dist/server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
-    "init-db": "node scripts/initDatabase.js",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "tsx watch server.ts",
+    "init-db": "tsx scripts/initDatabase.ts",
     "migrate": "node-pg-migrate",
-    "migrate:up": "node scripts/migrateHelper.js up",
-    "migrate:down": "node scripts/migrateHelper.js down",
-    "migrate:create": "node scripts/createMigration.js"
+    "migrate:up": "tsx scripts/migrateHelper.ts up",
+    "migrate:down": "tsx scripts/migrateHelper.ts down",
+    "migrate:create": "tsx scripts/createMigration.ts"
   },
   "keywords": [
     "node",
     "postgresql",
     "express",
-    "api"
+    "api",
+    "typescript"
   ],
   "author": "",
   "license": "MIT",
@@ -27,8 +29,13 @@
     "pg": "^8.16.3"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.6",
+    "@types/pg": "^8.10.9",
     "node-pg-migrate": "^8.0.3",
-    "nodemon": "^3.0.1"
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
   }
 }
 

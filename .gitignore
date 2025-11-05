@@ -1,20 +1,65 @@
 # Dependencias
 node_modules/
+**/node_modules/
 
 # Variables de entorno
 .env
+.env.local
+.env.*.local
+
+# TypeScript build outputs
+dist/
+build/
+**/dist/
+**/build/
+*.tsbuildinfo
+
+# Source maps
+*.map
+*.js.map
+*.d.ts.map
 
 # Logs
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pnpm-debug.log*
+
+# Testing
+coverage/
+*.lcov
+.nyc_output/
 
 # Sistema operativo
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+Desktop.ini
 
 # IDE
 # .vscode/  # Comentado para mantener launch.json
 .idea/
 *.swp
 *.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# Vite
+frontend/dist/
+frontend/.vite/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
 

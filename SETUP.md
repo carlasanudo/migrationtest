@@ -25,7 +25,7 @@ npm install
 # Copy the example or create manually
 DB_HOST=localhost
 DB_PORT=5432
-DB_NAME=imageproject_db
+DB_NAME=attempt2
 DB_USER=postgres
 DB_PASSWORD=
 PORT=3000
