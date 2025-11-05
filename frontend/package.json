@@ -5,18 +5,20 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview",
     "serve": "vite preview --port 4173"
   },
   "keywords": [
     "frontend",
     "vite",
-    "javascript"
+    "typescript"
   ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^20.10.6",
+    "typescript": "^5.3.3",
     "vite": "^5.0.0"
   }
 }

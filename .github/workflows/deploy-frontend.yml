@@ -31,19 +31,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-        if: ${{ false }} # Set to true if frontend has build step
+          cache: 'npm'
+        working-directory: ./frontend
       
-      - name: Install dependencies (if needed)
-        if: false # Set to true if frontend has package.json
-        run: |
-          cd frontend
-          npm ci
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: npm ci
       
-      - name: Build frontend (if needed)
-        if: false # Set to true if frontend has build step
-        run: |
-          cd frontend
-          npm run build
+      - name: Build frontend
+        working-directory: ./frontend
+        run: npm run build
       
       - name: Deploy to production
         env:
